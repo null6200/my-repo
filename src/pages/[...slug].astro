@@ -1,0 +1,18 @@
+---
+import { Head } from "@/components/Head";
+import ClientRouter from "@/components/ClientRouter";
+import "@/styles/global.css";
+---
+
+<html lang="en" class="w-full h-full">
+  <head>
+    <Head />
+    <title>Skincare E-Commerce</title>
+    <meta name="description" content="Premium skincare products with scientific formulation" />
+  </head>
+  <body class="w-full h-full">
+    <div id="root" class="w-full h-full">
+      <ClientRouter client:only="react" />
+    </div>
+  </body>
+</html>

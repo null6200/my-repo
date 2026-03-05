@@ -1,0 +1,30 @@
+import pg from 'pg';
+
+const { Pool } = pg;
+
+const pool = new Pool({
+  connectionString: import.meta.env.DATABASE_URL || process.env.DATABASE_URL,
+  max: 20,
+  idleTimeoutMillis: 30000,
+  connectionTimeoutMillis: 2000,
+});
+
+export async function query(text: string, params?: any[]) {
+  const start = Date.now();
+  try {
+    const res = await pool.query(text, params);
+    const duration = Date.now() - start;
+    console.log('Executed query', { text, duration, rows: res.rowCount });
+    return res;
+  } catch (error) {
+    console.error('Database query error:', error);
+    throw error;
+  }
+}
+
+export async function getClient() {
+  const client = await pool.connect();
+  return client;
+}
+
+export default pool;
