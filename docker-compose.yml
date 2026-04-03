@@ -26,11 +26,3 @@ services:
 
 volumes:
  postgres_data:
-Use this .env on the VPS:
-
-POSTGRES_USER=skincare_user
-POSTGRES_PASSWORD=change_this_password
-POSTGRES_DB=skincare_ecommerce
-
-PGADMIN_DEFAULT_EMAIL=admin@skincare.local
-PGADMIN_DEFAULT_PASSWORD=change_this_password
