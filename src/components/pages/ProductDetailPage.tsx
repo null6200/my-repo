@@ -29,7 +29,7 @@ export default function ProductDetailPage() {
     if (!id) return;
     setIsLoading(true);
     const data = await api.getProduct(id);
-    setProduct(data);
+    setProduct(data as SkincareProducts);
     setIsLoading(false);
   };
 
