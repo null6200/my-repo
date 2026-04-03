@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: glowvaskin-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USER:-skincare_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-skincare_pass_2024}
+      POSTGRES_DB: ${DB_NAME:-skincare_ecommerce}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - glowvaskin-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-skincare_user} -d ${DB_NAME:-skincare_ecommerce}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Astro/Node.js Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: glowvaskin-app
+    restart: unless-stopped
+    ports:
+      - "4321:4321"  # Astro default port
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${DB_USER:-skincare_user}:${DB_PASSWORD:-skincare_pass_2024}@postgres:5432/${DB_NAME:-skincare_ecommerce}
+      PUBLIC_PAYSTACK_PUBLIC_KEY: ${PUBLIC_PAYSTACK_PUBLIC_KEY}
+      RESEND_API_KEY: ${RESEND_API_KEY}
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - glowvaskin-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  glowvaskin-network:
+    driver: bridge
