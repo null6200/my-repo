@@ -95,9 +95,24 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-heading text-xl text-foreground mb-2">Call Us</h3>
-                    <a href="tel:+2348012345678" className="font-paragraph text-accent-pink hover:text-accent-purple transition-colors">
-                      +234 801 234 5678
+                    <a href="tel:+2348067394465" className="font-paragraph text-accent-pink hover:text-accent-purple transition-colors">
+                      +234 806 739 4465
                     </a>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-accent-lavender/20 rounded-2xl p-6">
+                  <div className="bg-accent-pink text-white p-3 rounded-full">
+                    <Phone size={24} />
+                  </div>
+                  <div>
+                    <h3 className="font-heading text-xl text-foreground mb-2">WhatsApp</h3>
+                    <a href="https://wa.me/2348067394465" className="font-paragraph text-accent-pink hover:text-accent-purple transition-colors">
+                      0806 739 4465
+                    </a>
+                    <p className="font-paragraph text-secondary mt-2">
+                      For more enquiries, visit our WhatsApp
+                    </p>
                   </div>
                 </div>
 

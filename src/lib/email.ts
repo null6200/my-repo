@@ -31,7 +31,7 @@ export async function sendOrderConfirmationEmail(data: OrderEmailData): Promise<
     const emailHtml = generateOrderEmailTemplate(data);
     
     const { data: emailData, error } = await resend.emails.send({
-      from: 'Glowvaskin <onboarding@resend.dev>',
+      from: 'GLOWVA SKIN <onboarding@resend.dev>',
       to: [data.customerEmail],
       subject: `Order Confirmation #${data.orderId.slice(0, 8)}`,
       html: emailHtml,
@@ -90,7 +90,7 @@ function generateOrderEmailTemplate(data: OrderEmailData): string {
               <!-- Header -->
               <tr>
                 <td style="background: linear-gradient(135deg, #E91E63 0%, #9C27B0 100%); padding: 40px 30px; text-align: center;">
-                  <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: bold;">GLOWVASKIN</h1>
+                  <h1 style="margin: 0; color: #ffffff; font-size: 32px; font-weight: bold;">GLOWVA SKIN</h1>
                   <p style="margin: 10px 0 0 0; color: #ffffff; font-size: 16px;">Order Confirmation</p>
                 </td>
               </tr>
@@ -165,7 +165,8 @@ function generateOrderEmailTemplate(data: OrderEmailData): string {
                     </p>
                     <p style="margin: 0; color: #E91E63; font-size: 14px;">
                       📧 support@glowvaskin.ng<br>
-                      📱 +234 XXX XXX XXXX
+                      📱 +234 806 739 4465<br>
+                      💬 WhatsApp: 0806 739 4465
                     </p>
                   </div>
                 </td>
@@ -175,10 +176,10 @@ function generateOrderEmailTemplate(data: OrderEmailData): string {
               <tr>
                 <td style="background-color: #9C27B0; padding: 30px; text-align: center;">
                   <p style="margin: 0 0 10px 0; color: #ffffff; font-size: 14px;">
-                    Thank you for shopping with Glowvaskin!
+                    Thank you for shopping with GLOWVA SKIN!
                   </p>
                   <p style="margin: 0; color: rgba(255,255,255,0.8); font-size: 12px;">
-                    © ${new Date().getFullYear()} Glowvaskin. All rights reserved.
+                    © ${new Date().getFullYear()} GLOWVA SKIN. All rights reserved.
                   </p>
                 </td>
               </tr>

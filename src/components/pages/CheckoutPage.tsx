@@ -473,14 +473,22 @@ export default function CheckoutPage() {
       }
     }
 
-    // Update pickup locations when state or logistics company changes (for pickup station)
-    if (name === 'state' || name === 'logisticsCompany') {
-      const company = name === 'logisticsCompany' ? value : formData.logisticsCompany;
-      const state = name === 'state' ? value : formData.state;
+    // Update pickup locations when logistics company changes (for pickup station)
+    if (name === 'logisticsCompany' && formData.deliveryMethod === 'pickup') {
+      const company = value;
       
-      if (formData.deliveryMethod === 'pickup' && company && state) {
-        const locations = PICKUP_LOCATIONS[company]?.[state] || PICKUP_LOCATIONS[company]?.['default'] || [];
-        setAvailablePickupLocations(locations);
+      if (company) {
+        // Get all locations for the selected company across all states
+        const companyLocations = PICKUP_LOCATIONS[company] || {};
+        const allLocations: string[] = [];
+        
+        // Flatten all locations from all states
+        Object.keys(companyLocations).forEach(state => {
+          const stateLocations = companyLocations[state] || [];
+          allLocations.push(...stateLocations);
+        });
+        
+        setAvailablePickupLocations(allLocations);
         setFormData(prev => ({ ...prev, pickupLocation: '' }));
       }
     }

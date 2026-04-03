@@ -6,14 +6,15 @@ import { SkincareProducts } from '@/entities';
 import { api } from '@/lib/api';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { ImageUpload } from '@/components/ui/image-upload';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 export default function AdminPage() {
   const [products, setProducts] = useState<SkincareProducts[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingProduct, setEditingProduct] = useState<SkincareProducts | null>(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [password, setPassword] = useState('');
+  const [showPasswordError, setShowPasswordError] = useState(false);
 
   useEffect(() => {
     loadProducts();
@@ -23,7 +24,7 @@ export default function AdminPage() {
     setIsLoading(true);
     try {
       const result = await api.getProducts();
-      setProducts(result.items || []);
+      setProducts(result.items as SkincareProducts[] || []);
     } catch (error) {
       console.error('Failed to load products:', error);
       setProducts([]);
@@ -48,10 +49,65 @@ export default function AdminPage() {
     setEditingProduct(null);
   };
 
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password === 'toluwalope6200') {
+      setIsAuthenticated(true);
+      setShowPasswordError(false);
+    } else {
+      setShowPasswordError(true);
+      setPassword('');
+    }
+  };
+
+  // Show login screen if not authenticated
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-accent-pink to-accent-purple flex items-center justify-center p-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md"
+        >
+          <div className="text-center mb-8">
+            <h1 className="font-heading text-3xl text-accent-purple mb-2">Admin Access</h1>
+            <p className="font-paragraph text-secondary">Enter password to continue</p>
+          </div>
+
+          <form onSubmit={handleLogin} className="space-y-6">
+            <div>
+              <label className="font-paragraph text-sm font-semibold text-foreground mb-2 block">
+                Password
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg font-paragraph focus:outline-none focus:border-accent-pink transition-colors"
+                placeholder="Enter admin password"
+                required
+              />
+              {showPasswordError && (
+                <p className="text-red-500 text-sm mt-2 font-paragraph">
+                  Incorrect password. Please try again.
+                </p>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className="w-full bg-accent-pink text-white font-paragraph font-bold px-8 py-4 rounded-lg hover:bg-accent-purple transition-all duration-300 shadow-lg hover:shadow-xl"
+            >
+              Login
+            </button>
+          </form>
+        </motion.div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
       <section className="w-full py-12">
         <div className="max-w-[100rem] mx-auto px-8">
           <div className="mb-8">
@@ -217,8 +273,6 @@ export default function AdminPage() {
           onSave={loadProducts}
         />
       )}
-
-      <Footer />
     </div>
   );
 }

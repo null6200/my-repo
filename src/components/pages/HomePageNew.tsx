@@ -85,7 +85,7 @@ export default function HomePage() {
             <div className="space-y-10 text-center lg:text-left">
               <div className="space-y-6">
                 <h2 className="font-heading text-3xl md:text-4xl text-accent-purple">
-                  Glowva <span className="italic text-accent-pink">Skin</span>
+                  GLOWVA <span className="italic text-accent-pink">SKIN</span>
                 </h2>
                 <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl leading-tight text-foreground">
                   Your Confidence Begins with{' '}
@@ -353,17 +353,17 @@ export default function HomePage() {
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Column 1 */}
+          {/* Column 1  instagram*/}
           <div className="space-y-4">
             {/* Large Box 1 */}
             <a
-              href="https://instagram.com/glowvaskin"
+              href="https://www.instagram.com/glowva_skin?igsh=MWY2bmpsbGI0Z2xhaQ%3D%3D&utm_source=qr"
               target="_blank"
               rel="noopener noreferrer"
               className="block aspect-square overflow-hidden rounded-lg group relative max-w-sm mx-auto"
             >
               <img
-                src="https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?w=600&h=600&fit=crop"
+                src="/instagram.jpg"
                 alt="Instagram post 1"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
@@ -377,37 +377,37 @@ export default function HomePage() {
             {/* Small Boxes 1-3 */}
             <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://www.instagram.com/reel/DVat94cjN5y/?igsh=amNpeHVkYWI4NWJn"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[-8deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=200&h=200&fit=crop"
+                  src="/instagram1.jpg"
                   alt="Instagram post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://www.instagram.com/reel/DVHvfaqjBFi/?igsh=MnBsZmpoYWQ2Y3Zl"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[5deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=200&fit=crop"
+                  src="/instagram2.jpg"
                   alt="Instagram post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://www.instagram.com/reel/DQSOZP-jPJB/?igsh=ODRxdDQxdHp4NGw1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[-3deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=200&h=200&fit=crop"
+                  src="/instagram3.jpg"
                   alt="Instagram post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
@@ -415,18 +415,18 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Column 2 */}
+          {/* Column 2 tiktok */}
           <div className="space-y-4">
             {/* Large Box 2 */}
             <a
-              href="https://instagram.com/glowvaskin"
+              href="https://www.tiktok.com/@glowva_skin?_r=1&_t=ZS-95DH5ugzLHN"
               target="_blank"
               rel="noopener noreferrer"
               className="block aspect-square overflow-hidden rounded-lg group relative max-w-sm mx-auto"
             >
               <img
-                src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=600&h=600&fit=crop"
-                alt="Instagram post 2"
+                src="/tiktok.jpg"
+                alt="TikTok post"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-accent-pink/0 group-hover:bg-accent-pink/70 transition-all duration-300 flex items-center justify-center">
@@ -439,56 +439,56 @@ export default function HomePage() {
             {/* Small Boxes 4-6 */}
             <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://vt.tiktok.com/ZSHrue6P7/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[6deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?w=200&h=200&fit=crop"
-                  alt="Instagram post"
+                  src="/tiktok1.jpeg"
+                  alt="TikTok post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://vt.tiktok.com/ZSHru5qw9/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[-5deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop"
-                  alt="Instagram post"
+                  src="/tiktok2.jpg"
+                  alt="TikTok post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://vt.tiktok.com/ZSHruh9xj/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[4deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&h=200&fit=crop"
-                  alt="Instagram post"
+                  src="/tiktok3.jpg"
+                  alt="TikTok post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>
             </div>
           </div>
 
-          {/* Column 3 */}
+          {/* Column 3  Snapshat*/}
           <div className="space-y-4">
             {/* Large Box 3 */}
             <a
-              href="https://instagram.com/glowvaskin"
+              href="https://www.snapchat.com/add/glowva_skin?share_id=pDCvABTPS4GhzmKHLqXyKQ&locale=en_US"
               target="_blank"
               rel="noopener noreferrer"
               className="block aspect-square overflow-hidden rounded-lg group relative max-w-sm mx-auto"
             >
               <img
-                src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&h=600&fit=crop"
-                alt="Instagram post 3"
+                src="/snapchat.jpg"
+                alt="Snapchat post"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-accent-pink/0 group-hover:bg-accent-pink/70 transition-all duration-300 flex items-center justify-center">
@@ -501,38 +501,38 @@ export default function HomePage() {
             {/* Small Boxes 7-9 */}
             <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://snapchat.com/t/XXFjSbcc"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[-6deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1502823403499-6ccfcf4fb453?w=200&h=200&fit=crop"
-                  alt="Instagram post"
+                  src="/snapchat1.jpg"
+                  alt="Snapchat post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://snapchat.com/t/BRLaUOq1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[7deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop"
-                  alt="Instagram post"
+                  src="/snapchat2.jpg"
+                  alt="Snapchat post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>
               <a
-                href="https://instagram.com/glowvaskin"
+                href="https://snapchat.com/t/NNnkM53x"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="aspect-square overflow-hidden rounded-lg group relative rotate-[-4deg] hover:rotate-0 transition-all duration-300"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop"
-                  alt="Instagram post"
+                  src="/snapchat3.jpg"
+                  alt="Snapchat post"
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                 />
               </a>

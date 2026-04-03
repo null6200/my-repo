@@ -41,7 +41,7 @@ export default function Header() {
 
               {/* Center Logo */}
               <Link to="/" className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-accent-purple hover:text-accent-pink transition-colors">
-                <span className="text-accent-purple">GLOWVA</span>
+                <span className="text-accent-purple">GLOWVA</span>{' '}
                 <span className="text-accent-pink italic">SKIN</span>
               </Link>
               

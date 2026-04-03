@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Package, TrendingUp, DollarSign, ShoppingBag, Truck } from 'lucide-react';
 import { formatPrice } from '@/lib/api';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 interface Order {
   id: string;
@@ -83,8 +81,6 @@ export default function AdminSalesPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
       <div className="w-full py-12">
         <div className="max-w-[120rem] mx-auto px-8">
           <div className="mb-8">
@@ -283,8 +279,6 @@ export default function AdminSalesPage() {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }

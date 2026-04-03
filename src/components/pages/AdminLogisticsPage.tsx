@@ -2,8 +2,6 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Package, TrendingUp, Truck, Plus, Edit, Trash2, Save } from 'lucide-react';
 import { formatPrice } from '@/lib/api';
-import Header from '@/components/Header';
-import Footer from '@/components/Footer';
 
 interface LogisticsCompany {
   id: string;
@@ -141,8 +139,6 @@ export default function AdminLogisticsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
-
       <div className="w-full py-12">
         <div className="max-w-[120rem] mx-auto px-8">
           <div className="mb-8">
@@ -431,8 +427,6 @@ export default function AdminLogisticsPage() {
           </div>
         </div>
       )}
-
-      <Footer />
     </div>
   );
 }

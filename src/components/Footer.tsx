@@ -85,12 +85,15 @@ export default function Footer() {
           <div className="space-y-3 md:space-y-4">
             <h4 className="font-heading text-sm md:text-base lg:text-lg">Support</h4>
             <nav className="flex flex-col gap-1.5 md:gap-2">
-              <a href="#" className="font-paragraph text-xs md:text-sm hover:text-accent-lavender transition-colors">
+              <Link to="/contact" className="font-paragraph text-xs md:text-sm hover:text-accent-lavender transition-colors">
                 Contact us
+              </Link>
+              <a href="https://wa.me/2348067394465" target="_blank" rel="noopener noreferrer" className="font-paragraph text-xs md:text-sm hover:text-accent-lavender transition-colors">
+                WhatsApp: 0806 739 4465
               </a>
-              <a href="#" className="font-paragraph text-xs md:text-sm hover:text-accent-lavender transition-colors">
-                Refunds/Returns
-              </a>
+              <p className="font-paragraph text-xs md:text-sm text-white/80">
+                For more enquiries, visit our WhatsApp
+              </p>
               <a href="#" className="font-paragraph text-xs md:text-sm hover:text-accent-lavender transition-colors">
                 Terms
               </a>
@@ -103,10 +106,10 @@ export default function Footer() {
         
         <div className="border-t border-white/20 pt-6 md:pt-8 flex flex-col md:flex-row justify-between items-center gap-3 md:gap-4">
           <p className="font-paragraph text-xs md:text-sm">
-            © {new Date().getFullYear()} Glowvaskin | All rights reserved
+            © {new Date().getFullYear()} GLOWVA SKIN | All rights reserved
           </p>
           <p className="font-paragraph text-xs md:text-sm">
-            Designed by <span className="font-semibold">Bave</span>
+            Designed by <span className="font-semibold">Ochy</span> | <a href="tel:+2347066329218" className="hover:text-accent-lavender transition-colors">0706 632 9218</a>
           </p>
         </div>
       </div>
