@@ -41,3 +41,10 @@ docs/*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Test files
+test-env.js
+test-resend.js
+
+# SQL migration files (keep in repo for reference)
+# add-shipping-columns.sql

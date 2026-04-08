@@ -1,5 +1,6 @@
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
+import BottomNav from '@/components/BottomNav';
 import HomePage from '@/components/pages/HomePageNew';
 import ProductsPage from '@/components/pages/ProductsPage';
 import ProductDetailPage from '@/components/pages/ProductDetailPage';
@@ -11,12 +12,13 @@ import OrderConfirmationPage from '@/components/pages/OrderConfirmationPage';
 import AboutPage from '@/components/pages/AboutPage';
 import ContactPage from '@/components/pages/ContactPage';
 
-// Layout component that includes ScrollToTop
+// Layout component that includes ScrollToTop and BottomNav
 function Layout() {
   return (
     <>
       <ScrollToTop />
       <Outlet />
+      <BottomNav />
     </>
   );
 }

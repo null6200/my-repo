@@ -28,6 +28,9 @@ export interface Order {
   country: string;
   postal_code?: string;
   total_amount: number;
+  shipping_cost?: number;
+  logistics_company?: string;
+  pickup_location?: string;
   order_status?: string;
   payment_status?: string;
   paystack_reference?: string;

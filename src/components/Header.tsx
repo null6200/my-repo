@@ -15,18 +15,18 @@ export default function Header() {
       <header className="w-full bg-white sticky top-0 z-50 shadow-md">
         {/* Top Bar */}
         <div className="border-b border-gray-200">
-          <div className="max-w-[100rem] mx-auto px-4 md:px-8 py-3 md:py-4">
-            <div className="flex justify-between items-center">
+          <div className="max-w-[100rem] mx-auto px-3 md:px-8 py-2 md:py-4">
+            <div className="flex justify-between items-center gap-2">
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 hover:text-accent-pink transition-colors"
+                className="md:hidden p-2 hover:text-accent-pink transition-colors bg-accent-lavender/20 rounded-lg flex-shrink-0"
                 aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
 
-              {/* Left Navigation */}
+              {/* Left Navigation - Desktop Only */}
               <nav className="hidden md:flex items-center gap-8">
                 <Link to="/" className="font-paragraph text-base text-accent-pink hover:text-accent-purple transition-colors font-bold uppercase tracking-wide">
                   Home
@@ -40,20 +40,20 @@ export default function Header() {
               </nav>
 
               {/* Center Logo */}
-              <Link to="/" className="font-heading text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-accent-purple hover:text-accent-pink transition-colors">
+              <Link to="/" className="font-heading text-xl md:text-4xl lg:text-5xl font-extrabold text-accent-purple hover:text-accent-pink transition-colors flex-shrink-0">
                 <span className="text-accent-purple">GLOWVA</span>{' '}
                 <span className="text-accent-pink italic">SKIN</span>
               </Link>
               
               {/* Right Icons */}
-              <div className="flex items-center gap-2 md:gap-4">
-                <div className="hidden sm:block">
+              <div className="flex items-center gap-1 md:gap-4">
+                <div className="hidden md:block">
                   <SearchAutocomplete />
                 </div>
-                <button className="hidden sm:block p-2 hover:text-accent-pink transition-colors" aria-label="Account">
+                <button className="hidden md:block p-2 hover:text-accent-pink transition-colors" aria-label="Account">
                   <User className="w-5 h-5" />
                 </button>
-                <button className="hidden sm:block p-2 hover:text-accent-pink transition-colors" aria-label="Wishlist">
+                <button className="hidden md:block p-2 hover:text-accent-pink transition-colors" aria-label="Wishlist">
                   <Heart className="w-5 h-5" />
                 </button>
                 <button
@@ -75,7 +75,7 @@ export default function Header() {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-b border-gray-200 bg-white">
+          <div className="border-b border-gray-200 bg-white shadow-lg">
             <nav className="flex flex-col px-4 py-4 space-y-3">
               <Link
                 to="/"
@@ -98,14 +98,68 @@ export default function Header() {
               >
                 Contact Us
               </Link>
+              
+              {/* Product Categories */}
+              <div className="border-t border-gray-200 pt-3 mt-2">
+                <p className="font-paragraph text-xs text-gray-500 uppercase tracking-wider mb-2">Categories</p>
+                <Link
+                  to="/products?category=serums"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-paragraph text-sm text-foreground hover:text-accent-pink transition-colors font-bold uppercase tracking-wide py-2 block"
+                >
+                  Serums
+                </Link>
+                <Link
+                  to="/products?category=sunscreen"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-paragraph text-sm text-foreground hover:text-accent-pink transition-colors font-bold uppercase tracking-wide py-2 block"
+                >
+                  Sunscreen
+                </Link>
+                <Link
+                  to="/products?category=face"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-paragraph text-sm text-foreground hover:text-accent-pink transition-colors font-bold uppercase tracking-wide py-2 block"
+                >
+                  Face
+                </Link>
+                <Link
+                  to="/products?category=body-wash"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-paragraph text-sm text-foreground hover:text-accent-pink transition-colors font-bold uppercase tracking-wide py-2 block"
+                >
+                  Body Wash
+                </Link>
+                <Link
+                  to="/products?category=body-lotions"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-paragraph text-sm text-foreground hover:text-accent-pink transition-colors font-bold uppercase tracking-wide py-2 block"
+                >
+                  Body Lotions
+                </Link>
+                <Link
+                  to="/products?category=oils-serums"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-paragraph text-sm text-foreground hover:text-accent-pink transition-colors font-bold uppercase tracking-wide py-2 block"
+                >
+                  Oils & Serums
+                </Link>
+                <Link
+                  to="/products?category=treatments"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="font-paragraph text-sm text-foreground hover:text-accent-pink transition-colors font-bold uppercase tracking-wide py-2 block"
+                >
+                  Treatments
+                </Link>
+              </div>
             </nav>
           </div>
         )}
 
-        {/* Category Menu Bar */}
-        <div className="bg-white border-b border-gray-100">
+        {/* Category Menu Bar - Desktop Only */}
+        <div className="hidden md:block bg-white border-b border-gray-100">
           <div className="max-w-[100rem] mx-auto px-4 md:px-8">
-            <nav className="flex items-center justify-start md:justify-center gap-4 md:gap-8 py-3 md:py-4 overflow-x-auto scrollbar-hide">
+            <nav className="flex items-center justify-center gap-8 py-4">
               <Link to="/products?category=serums" className="font-paragraph text-sm md:text-base text-foreground hover:text-accent-pink transition-colors whitespace-nowrap uppercase font-bold tracking-wide">
                 Serums
               </Link>

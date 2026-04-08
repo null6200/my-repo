@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Package, TrendingUp, DollarSign, ShoppingBag, Truck } from 'lucide-react';
 import { formatPrice } from '@/lib/api';
+import OrderDetailsModal from '@/components/OrderDetailsModal';
 
 interface Order {
   id: string;
@@ -19,8 +20,11 @@ interface Order {
   logistics: string;
   pickupLocation: string;
   state: string;
+  city: string;
+  shippingAddress: string;
   status: 'Pending' | 'Processing' | 'Shipped' | 'Delivered' | 'Cancelled';
   paymentStatus: 'Pending' | 'Paid' | 'Failed';
+  paystackReference?: string;
   createdAt: string;
 }
 
@@ -29,6 +33,7 @@ export default function AdminSalesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [filterStatus, setFilterStatus] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     loadOrders();
@@ -266,7 +271,10 @@ export default function AdminSalesPage() {
                           </span>
                         </td>
                         <td className="px-6 py-4">
-                          <button className="font-paragraph text-sm text-accent-pink hover:text-accent-purple font-semibold">
+                          <button 
+                            onClick={() => setSelectedOrder(order)}
+                            className="font-paragraph text-sm text-accent-pink hover:text-accent-purple font-semibold"
+                          >
                             View Details
                           </button>
                         </td>
@@ -279,6 +287,14 @@ export default function AdminSalesPage() {
           </div>
         </div>
       </div>
+
+      {/* Order Details Modal */}
+      {selectedOrder && (
+        <OrderDetailsModal
+          order={selectedOrder}
+          onClose={() => setSelectedOrder(null)}
+        />
+      )}
     </div>
   );
 }

@@ -64,17 +64,17 @@ export default function SearchAutocomplete() {
   };
 
   return (
-    <div ref={searchRef} className="relative w-full max-w-md">
+    <div ref={searchRef} className="relative w-full max-w-[200px]">
       {/* Search Input */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
         <input
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => searchQuery && setIsOpen(true)}
           placeholder="Search products..."
-          className="w-full pl-10 pr-10 py-2 border-2 border-gray-200 rounded-full font-paragraph text-sm focus:outline-none focus:border-accent-pink transition-colors"
+          className="w-full pl-9 pr-9 py-2 border-2 border-gray-200 rounded-full font-paragraph text-sm font-bold focus:outline-none focus:border-accent-pink transition-colors"
         />
         {searchQuery && (
           <button

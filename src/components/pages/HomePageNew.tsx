@@ -78,32 +78,32 @@ export default function HomePage() {
       </div>
 
       {/* Hero Section */}
-      <section className="w-full bg-gradient-to-b from-accent-lavender/10 to-white px-6 md:px-12 py-20 md:py-32">
+      <section className="w-full bg-gradient-to-b from-accent-lavender/10 to-white px-4 md:px-12 py-8 md:py-32">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Hero Content */}
-            <div className="space-y-10 text-center lg:text-left">
-              <div className="space-y-6">
-                <h2 className="font-heading text-3xl md:text-4xl text-accent-purple">
+            <div className="space-y-4 md:space-y-10 text-center lg:text-left">
+              <div className="space-y-3 md:space-y-6">
+                <h2 className="font-heading text-2xl md:text-4xl text-accent-purple">
                   GLOWVA <span className="italic text-accent-pink">SKIN</span>
                 </h2>
-                <h1 className="font-heading text-5xl md:text-6xl lg:text-7xl leading-tight text-foreground">
+                <h1 className="font-heading text-3xl md:text-6xl lg:text-7xl leading-tight text-foreground">
                   Your Confidence Begins with{' '}
                   <span className="text-accent-pink">Your Skin</span>
                 </h1>
               </div>
               
-              <div className="space-y-8">
-                <div className="bg-gradient-to-r from-accent-pink to-accent-purple rounded-3xl p-10 text-white shadow-2xl max-w-md mx-auto lg:mx-0">
-                  <div className="flex items-center gap-4">
-                    <span className="text-4xl">▸</span>
-                    <span className="font-paragraph text-xl font-semibold">Original skincare products</span>
+              <div className="space-y-4 md:space-y-8">
+                <div className="bg-gradient-to-r from-accent-pink to-accent-purple rounded-2xl md:rounded-3xl p-5 md:p-10 text-white shadow-2xl max-w-md mx-auto lg:mx-0">
+                  <div className="flex items-center gap-3 md:gap-4">
+                    <span className="text-2xl md:text-4xl">▸</span>
+                    <span className="font-paragraph text-base md:text-xl font-semibold">Original skincare products</span>
                   </div>
                 </div>
 
                 <div>
                   <Link to="/products">
-                    <button className="bg-accent-pink text-white font-paragraph font-bold px-16 py-6 rounded-full hover:bg-accent-purple transition-all duration-300 shadow-2xl hover:shadow-accent-pink/50 hover:scale-105 text-xl">
+                    <button className="bg-accent-pink text-white font-paragraph font-bold px-8 py-3 md:px-16 md:py-6 rounded-full hover:bg-accent-purple transition-all duration-300 shadow-2xl hover:shadow-accent-pink/50 hover:scale-105 text-base md:text-xl">
                       Shop Now
                     </button>
                   </Link>
@@ -111,9 +111,9 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Hero Image */}
-            <div className="relative h-[450px] lg:h-[600px]">
-              <div className="w-full h-full rounded-3xl overflow-hidden relative shadow-2xl">
+            {/* Hero Image - Desktop Only */}
+            <div className="hidden lg:block relative h-[450px] lg:h-[600px]">
+              <div className="w-full h-full rounded-2xl md:rounded-3xl overflow-hidden relative shadow-2xl">
                 <img 
                   src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=800&h=800&fit=crop"
                   alt="Glowva Skin Products" 
@@ -123,13 +123,13 @@ export default function HomePage() {
                 <div className="absolute inset-0 bg-gradient-to-r from-white/30 via-transparent to-white/30"></div>
                 <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/20"></div>
               </div>
-              <div className="absolute top-6 right-6 bg-white rounded-2xl px-6 py-4 shadow-xl border-2 border-accent-pink/20">
-                <p className="font-paragraph text-sm font-bold text-accent-purple uppercase text-center leading-tight">
+              <div className="absolute top-3 right-3 md:top-6 md:right-6 bg-white rounded-xl md:rounded-2xl px-3 py-2 md:px-6 md:py-4 shadow-xl border-2 border-accent-pink/20">
+                <p className="font-paragraph text-xs md:text-sm font-bold text-accent-purple uppercase text-center leading-tight">
                   Fast Delivery<br/>Nationwide &<br/>Worldwide
                 </p>
               </div>
-              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent-purple to-accent-pink px-8 py-4 rounded-full shadow-2xl">
-                <p className="font-heading text-lg text-white italic">
+              <div className="absolute bottom-4 md:bottom-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-accent-purple to-accent-pink px-4 py-2 md:px-8 md:py-4 rounded-full shadow-2xl">
+                <p className="font-heading text-sm md:text-lg text-white italic">
                   Your skin deserves the best...
                 </p>
               </div>
@@ -139,55 +139,55 @@ export default function HomePage() {
       </section>
 
       {/* Categories Section */}
-      <section className="w-full px-6 md:px-12 py-20 bg-white">
+      <section className="w-full px-4 md:px-12 py-12 md:py-20 bg-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-4xl md:text-5xl text-foreground mb-4">Our Category</h2>
-            <p className="font-paragraph text-lg text-secondary">Explore our curated collections</p>
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="font-heading text-2xl md:text-5xl text-foreground mb-2 md:mb-4">Our Category</h2>
+            <p className="font-paragraph text-sm md:text-lg text-secondary">Explore our curated collections</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 mb-8">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-8 mb-6 md:mb-8">
           {categories.map((category, idx) => (
             <Link
               key={idx}
               to={category.link}
               className="flex flex-col items-center group"
             >
-              <div className="w-44 h-44 rounded-full bg-gradient-to-br from-accent-lavender/30 to-accent-pink/10 overflow-hidden mb-4 flex items-center justify-center p-8 transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl shadow-lg border-4 border-white">
+              <div className="w-28 h-28 md:w-44 md:h-44 rounded-full bg-gradient-to-br from-accent-lavender/30 to-accent-pink/10 overflow-hidden mb-2 md:mb-4 flex items-center justify-center p-4 md:p-8 transition-all duration-300 group-hover:scale-110 group-hover:shadow-2xl shadow-lg border-2 md:border-4 border-white">
                 <img
                   src={category.image}
                   alt={category.name}
                   className="w-full h-full object-contain"
                 />
               </div>
-              <h3 className="font-heading text-xl font-semibold text-foreground group-hover:text-accent-pink transition-colors">
+              <h3 className="font-heading text-sm md:text-xl font-semibold text-foreground group-hover:text-accent-pink transition-colors">
                 {category.name}
               </h3>
             </Link>
           ))}
         </div>
-        <div className="text-center mt-8">
-          <Link to="/products" className="inline-flex items-center gap-2 text-accent-pink hover:text-accent-purple font-paragraph font-bold text-lg border-2 border-accent-pink hover:border-accent-purple px-8 py-3 rounded-full transition-all duration-300 hover:scale-105">
-            VIEW ALL CATEGORIES <ArrowRight size={24} />
+        <div className="text-center mt-6 md:mt-8">
+          <Link to="/products" className="inline-flex items-center gap-2 text-accent-pink hover:text-accent-purple font-paragraph font-bold text-sm md:text-lg border-2 border-accent-pink hover:border-accent-purple px-6 py-2 md:px-8 md:py-3 rounded-full transition-all duration-300 hover:scale-105">
+            VIEW ALL CATEGORIES <ArrowRight size={20} className="md:w-6 md:h-6" />
           </Link>
         </div>
         </div>
       </section>
 
       {/* Best Seller Section */}
-      <section className="w-full px-6 md:px-12 py-20 bg-gradient-to-b from-accent-lavender/5 to-white">
+      <section className="w-full px-4 md:px-12 py-12 md:py-20 bg-gradient-to-b from-accent-lavender/5 to-white">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-4xl md:text-5xl text-foreground mb-4">Best Seller</h2>
-            <p className="font-paragraph text-lg text-secondary">Our most loved products</p>
+          <div className="text-center mb-8 md:mb-12">
+            <h2 className="font-heading text-2xl md:text-5xl text-foreground mb-2 md:mb-4">Best Seller</h2>
+            <p className="font-paragraph text-sm md:text-lg text-secondary">Our most loved products</p>
           </div>
 
         {isLoading ? (
-          <div className="text-center py-20">
-            <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-accent-pink"></div>
+          <div className="text-center py-12 md:py-20">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 md:h-12 md:w-12 border-b-2 border-accent-pink"></div>
           </div>
         ) : (
           <>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-8">
               {products.slice(0, 5).map((product) => (
                 <div
                   key={product._id}
@@ -204,14 +204,14 @@ export default function HomePage() {
                       )}
                     </div>
                   </Link>
-                  <div className="p-5 space-y-3 flex flex-col flex-grow">
+                  <div className="p-3 md:p-5 space-y-2 md:space-y-3 flex flex-col flex-grow">
                     <Link to={`/products/${product._id}`} className="flex-grow">
-                      <h3 className="font-paragraph text-base font-semibold text-foreground line-clamp-2 hover:text-accent-pink transition-colors">
+                      <h3 className="font-paragraph text-xs md:text-base font-semibold text-foreground line-clamp-2 hover:text-accent-pink transition-colors">
                         {product.itemName}
                       </h3>
                     </Link>
-                    <div className="flex items-center justify-between mt-auto pt-3">
-                      <span className="font-heading text-xl text-accent-pink font-bold">
+                    <div className="flex items-center justify-between mt-auto pt-2 md:pt-3">
+                      <span className="font-heading text-sm md:text-xl text-accent-pink font-bold">
                         {formatPrice(product.itemPrice || 0)}
                       </span>
                       <button
@@ -237,9 +237,9 @@ export default function HomePage() {
                 </div>
               ))}
             </div>
-            <div className="text-center mt-12">
-              <Link to="/products" className="inline-flex items-center gap-2 bg-accent-pink text-white hover:bg-accent-purple font-paragraph font-bold text-lg px-10 py-4 rounded-full transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl">
-                VIEW ALL PRODUCTS <ArrowRight size={24} />
+            <div className="text-center mt-8 md:mt-12">
+              <Link to="/products" className="inline-flex items-center gap-1 md:gap-2 bg-accent-pink text-white hover:bg-accent-purple font-paragraph font-bold text-xs md:text-lg px-6 py-2.5 md:px-10 md:py-4 rounded-full transition-all duration-300 hover:scale-105 shadow-xl hover:shadow-2xl">
+                VIEW ALL PRODUCTS <ArrowRight size={16} className="md:w-6 md:h-6" />
               </Link>
             </div>
           </>
@@ -347,193 +347,199 @@ export default function HomePage() {
 
       {/* Social Media Feed Section */}
       <section className="w-full px-6 md:px-12 py-16 max-w-[120rem] mx-auto">
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-3xl md:text-4xl text-foreground mb-2">Join Our Community</h2>
-          <p className="font-paragraph text-secondary">Follow us on Instagram</p>
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="font-heading text-2xl md:text-4xl text-foreground mb-2">Join Our Community</h2>
+          <p className="font-paragraph text-sm md:text-base text-secondary">Follow us on Instagram</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {/* Column 1  instagram*/}
-          <div className="space-y-4">
-            {/* Large Box 1 */}
-            <a
-              href="https://www.instagram.com/glowva_skin?igsh=MWY2bmpsbGI0Z2xhaQ%3D%3D&utm_source=qr"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block aspect-square overflow-hidden rounded-lg group relative max-w-sm mx-auto"
-            >
+        <div className="max-w-5xl mx-auto">
+          {/* Big Boxes Row - 3 across */}
+          <div className="grid grid-cols-3 gap-2 md:gap-6 mb-3 md:mb-6">
+            {/* Instagram Big Box */}
+            <div>
+              <p className="text-center font-paragraph font-bold text-xs md:text-sm text-accent-pink mb-1 md:mb-2">INSTAGRAM</p>
+              <a
+                href="https://www.instagram.com/glowva_skin?igsh=MWY2bmpsbGI0Z2xhaQ%3D%3D&utm_source=qr"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block aspect-square overflow-hidden rounded-lg group relative"
+              >
               <img
                 src="/instagram.jpg"
-                alt="Instagram post 1"
+                alt="Instagram"
                 className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
               <div className="absolute inset-0 bg-accent-pink/0 group-hover:bg-accent-pink/70 transition-all duration-300 flex items-center justify-center">
-                <span className="text-white font-paragraph font-bold text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Click me
+                <span className="text-white font-paragraph font-bold text-xs md:text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Instagram
                 </span>
               </div>
             </a>
-            
-            {/* Small Boxes 1-3 */}
-            <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
+            </div>
+
+            {/* TikTok Big Box */}
+            <div>
+              <p className="text-center font-paragraph font-bold text-xs md:text-sm text-accent-pink mb-1 md:mb-2">TIKTOK</p>
+              <a
+                href="https://www.tiktok.com/@glowva_skin?_r=1&_t=ZS-95DH5ugzLHN"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block aspect-square overflow-hidden rounded-lg group relative"
+            >
+              <img
+                src="/tiktok.jpg"
+                alt="TikTok"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-accent-pink/0 group-hover:bg-accent-pink/70 transition-all duration-300 flex items-center justify-center">
+                <span className="text-white font-paragraph font-bold text-xs md:text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  TikTok
+                </span>
+              </div>
+            </a>
+            </div>
+
+            {/* Snapchat Big Box */}
+            <div>
+              <p className="text-center font-paragraph font-bold text-xs md:text-sm text-accent-pink mb-1 md:mb-2">SNAPCHAT</p>
+              <a
+                href="https://www.snapchat.com/add/glowva_skin?share_id=pDCvABTPS4GhzmKHLqXyKQ&locale=en_US"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block aspect-square overflow-hidden rounded-lg group relative"
+            >
+              <img
+                src="/snapchat.jpg"
+                alt="Snapchat"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-accent-pink/0 group-hover:bg-accent-pink/70 transition-all duration-300 flex items-center justify-center">
+                <span className="text-white font-paragraph font-bold text-xs md:text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  Snapchat
+                </span>
+              </div>
+            </a>
+            </div>
+          </div>
+
+          {/* Small Boxes Row - 3 groups of 3 */}
+          <div className="grid grid-cols-3 gap-2 md:gap-6">
+            {/* Instagram small boxes group */}
+            <div className="grid grid-cols-3 gap-1">
               <a
                 href="https://www.instagram.com/reel/DVat94cjN5y/?igsh=amNpeHVkYWI4NWJn"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[-8deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/instagram1.jpg"
-                  alt="Instagram post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="Instagram"
+                  className="w-full h-full object-cover"
                 />
               </a>
               <a
                 href="https://www.instagram.com/reel/DVHvfaqjBFi/?igsh=MnBsZmpoYWQ2Y3Zl"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[5deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/instagram2.jpg"
-                  alt="Instagram post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="Instagram"
+                  className="w-full h-full object-cover"
                 />
               </a>
               <a
                 href="https://www.instagram.com/reel/DQSOZP-jPJB/?igsh=ODRxdDQxdHp4NGw1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[-3deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/instagram3.jpg"
-                  alt="Instagram post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="Instagram"
+                  className="w-full h-full object-cover"
                 />
               </a>
             </div>
-          </div>
 
-          {/* Column 2 tiktok */}
-          <div className="space-y-4">
-            {/* Large Box 2 */}
-            <a
-              href="https://www.tiktok.com/@glowva_skin?_r=1&_t=ZS-95DH5ugzLHN"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block aspect-square overflow-hidden rounded-lg group relative max-w-sm mx-auto"
-            >
-              <img
-                src="/tiktok.jpg"
-                alt="TikTok post"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-accent-pink/0 group-hover:bg-accent-pink/70 transition-all duration-300 flex items-center justify-center">
-                <span className="text-white font-paragraph font-bold text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Click me
-                </span>
-              </div>
-            </a>
-            
-            {/* Small Boxes 4-6 */}
-            <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
+            {/* TikTok small boxes group */}
+            <div className="grid grid-cols-3 gap-1">
               <a
                 href="https://vt.tiktok.com/ZSHrue6P7/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[6deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/tiktok1.jpeg"
-                  alt="TikTok post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="TikTok"
+                  className="w-full h-full object-cover"
                 />
               </a>
               <a
                 href="https://vt.tiktok.com/ZSHru5qw9/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[-5deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/tiktok2.jpg"
-                  alt="TikTok post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="TikTok"
+                  className="w-full h-full object-cover"
                 />
               </a>
               <a
                 href="https://vt.tiktok.com/ZSHruh9xj/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[4deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/tiktok3.jpg"
-                  alt="TikTok post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="TikTok"
+                  className="w-full h-full object-cover"
                 />
               </a>
             </div>
-          </div>
 
-          {/* Column 3  Snapshat*/}
-          <div className="space-y-4">
-            {/* Large Box 3 */}
-            <a
-              href="https://www.snapchat.com/add/glowva_skin?share_id=pDCvABTPS4GhzmKHLqXyKQ&locale=en_US"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block aspect-square overflow-hidden rounded-lg group relative max-w-sm mx-auto"
-            >
-              <img
-                src="/snapchat.jpg"
-                alt="Snapchat post"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-accent-pink/0 group-hover:bg-accent-pink/70 transition-all duration-300 flex items-center justify-center">
-                <span className="text-white font-paragraph font-bold text-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  Click me
-                </span>
-              </div>
-            </a>
-            
-            {/* Small Boxes 7-9 */}
-            <div className="grid grid-cols-3 gap-2 max-w-xs mx-auto">
+            {/* Snapchat small boxes group */}
+            <div className="grid grid-cols-3 gap-1">
               <a
                 href="https://snapchat.com/t/XXFjSbcc"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[-6deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/snapchat1.jpg"
-                  alt="Snapchat post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="Snapchat"
+                  className="w-full h-full object-cover"
                 />
               </a>
               <a
                 href="https://snapchat.com/t/BRLaUOq1"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[7deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/snapchat2.jpg"
-                  alt="Snapchat post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="Snapchat"
+                  className="w-full h-full object-cover"
                 />
               </a>
               <a
                 href="https://snapchat.com/t/NNnkM53x"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="aspect-square overflow-hidden rounded-lg group relative rotate-[-4deg] hover:rotate-0 transition-all duration-300"
+                className="aspect-square overflow-hidden rounded-lg group relative hover:scale-105 transition-all duration-300"
               >
                 <img
                   src="/snapchat3.jpg"
-                  alt="Snapchat post"
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  alt="Snapchat"
+                  className="w-full h-full object-cover"
                 />
               </a>
             </div>

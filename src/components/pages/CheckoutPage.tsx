@@ -434,17 +434,34 @@ export default function CheckoutPage() {
     if (items.length === 0) {
       navigate('/products');
     }
+    
+    // Debug: Check if Paystack key is loaded
+    const paystackKey = import.meta.env.PUBLIC_PAYSTACK_PUBLIC_KEY;
+    console.log('🔑 Paystack Key Status:');
+    console.log('  - Key exists:', !!paystackKey);
+    console.log('  - Key starts with pk_test:', paystackKey?.startsWith('pk_test_'));
+    console.log('  - Key length:', paystackKey?.length);
+    console.log('  - First 15 chars:', paystackKey?.substring(0, 15));
   }, [items, navigate]);
 
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://js.paystack.co/v1/inline.js';
     script.async = true;
-    script.onload = () => setPaystackLoaded(true);
+    script.onload = () => {
+      console.log('✅ Paystack script loaded successfully');
+      console.log('PaystackPop available:', !!window.PaystackPop);
+      setPaystackLoaded(true);
+    };
+    script.onerror = () => {
+      console.error('❌ Failed to load Paystack script');
+    };
     document.body.appendChild(script);
 
     return () => {
-      document.body.removeChild(script);
+      if (document.body.contains(script)) {
+        document.body.removeChild(script);
+      }
     };
   }, []);
 
@@ -514,21 +531,35 @@ export default function CheckoutPage() {
 
     setIsProcessing(true);
 
-    const orderReference = generateOrderReference();
-    const totalWithShipping = totalPrice + shippingCost;
-    const amountInKobo = Math.round(totalWithShipping * 100);
+    try {
+      const orderReference = generateOrderReference();
+      const totalWithShipping = totalPrice + shippingCost;
+      const amountInKobo = Math.round(totalWithShipping * 100);
 
-    const handler = window.PaystackPop.setup({
-      key: import.meta.env.PUBLIC_PAYSTACK_PUBLIC_KEY || 'pk_test_xxxx',
-      email: formData.customerEmail,
-      amount: amountInKobo,
-      currency: 'NGN',
-      ref: orderReference,
-      onClose: () => {
+      const paystackKey = import.meta.env.PUBLIC_PAYSTACK_PUBLIC_KEY;
+      
+      if (!paystackKey || paystackKey === 'pk_test_xxxx') {
+        alert('Payment system not configured. Please contact support.');
         setIsProcessing(false);
-      },
-      callback: async (response) => {
-        try {
+        return;
+      }
+
+      console.log('Initializing Paystack with key:', paystackKey.substring(0, 10) + '...');
+      console.log('Amount in kobo:', amountInKobo);
+      console.log('Customer email:', formData.customerEmail);
+
+      const handler = window.PaystackPop.setup({
+        key: paystackKey,
+        email: formData.customerEmail,
+        amount: amountInKobo,
+        currency: 'NGN',
+        ref: orderReference,
+        onClose: () => {
+          console.log('Paystack popup closed');
+          setIsProcessing(false);
+        },
+        callback: (response) => {
+          console.log('Payment successful:', response);
           const orderItems = items.map(item => ({
             id: item.id,
             name: item.name,
@@ -537,7 +568,8 @@ export default function CheckoutPage() {
             image: item.image,
           }));
 
-          await api.createOrder({
+          // Handle async operations without async keyword
+          api.createOrder({
             customer_name: formData.customerName,
             customer_email: formData.customerEmail,
             customer_phone: formData.customerPhone,
@@ -547,24 +579,45 @@ export default function CheckoutPage() {
             country: formData.country,
             postal_code: formData.postalCode,
             total_amount: totalPrice,
+            shipping_cost: shippingCost,
+            logistics_company: formData.logisticsCompany,
+            pickup_location: formData.pickupLocation,
             order_status: 'Processing',
             payment_status: 'Paid',
             paystack_reference: response.reference,
             order_items: orderItems,
-          });
+          })
+            .then((orderResponse) => {
+              console.log('✅ Order saved successfully:', orderResponse);
+              console.log('🔄 Navigating to order confirmation page...');
+              console.log('   Reference:', response.reference);
+              // Navigate BEFORE clearing cart to avoid redirect to products page
+              navigate(`/order-confirmation?ref=${response.reference}`);
+              console.log('✅ Navigation initiated');
+              // Clear cart after navigation
+              setTimeout(() => {
+                console.log('🧹 Clearing cart...');
+                clearCart();
+              }, 100);
+            })
+            .catch((error) => {
+              console.error('❌ Failed to save order:', error);
+              alert('Payment successful but failed to save order. Please contact support with reference: ' + response.reference);
+            })
+            .finally(() => {
+              console.log('🏁 Setting processing to false');
+              setIsProcessing(false);
+            });
+        },
+      });
 
-          clearCart();
-          navigate(`/order-confirmation?ref=${response.reference}`);
-        } catch (error) {
-          console.error('Failed to save order:', error);
-          alert('Payment successful but failed to save order. Please contact support with reference: ' + response.reference);
-        } finally {
-          setIsProcessing(false);
-        }
-      },
-    });
-
-    handler.openIframe();
+      console.log('Opening Paystack iframe...');
+      handler.openIframe();
+    } catch (error) {
+      console.error('Error initializing Paystack:', error);
+      alert('Failed to initialize payment. Please try again or contact support.');
+      setIsProcessing(false);
+    }
   };
 
   if (items.length === 0) {
@@ -650,50 +703,113 @@ export default function CheckoutPage() {
                     </div>
                   </div>
 
+                  {/* Delivery Method Selection */}
                   <div className="bg-background border border-secondary/20 p-8">
                     <h2 className="font-heading text-2xl text-foreground mb-6">
-                      Shipping Address
+                      Delivery Method
                     </h2>
 
-                    <div className="space-y-6">
-                      <div>
-                        <label className="font-paragraph text-sm text-foreground mb-2 block">
-                          Street Address *
-                        </label>
-                        <input
-                          type="text"
-                          name="shippingAddress"
-                          required
-                          value={formData.shippingAddress}
-                          onChange={handleInputChange}
-                          className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
-                        />
-                      </div>
+                    <div className="space-y-4">
+                      <p className="font-paragraph text-sm text-secondary mb-4">
+                        How would you like to receive your order? *
+                      </p>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <label className="flex items-start gap-4 p-4 border-2 border-secondary/30 cursor-pointer hover:border-accent-pink transition-colors">
+                        <input
+                          type="radio"
+                          name="deliveryMethod"
+                          value="door"
+                          checked={formData.deliveryMethod === 'door'}
+                          onChange={handleInputChange}
+                          className="mt-1"
+                        />
+                        <div className="flex-1">
+                          <p className="font-paragraph font-semibold text-foreground">Door Delivery</p>
+                          <p className="font-paragraph text-sm text-secondary">Get your order delivered directly to your address</p>
+                        </div>
+                      </label>
+
+                      <label className="flex items-start gap-4 p-4 border-2 border-secondary/30 cursor-pointer hover:border-accent-pink transition-colors">
+                        <input
+                          type="radio"
+                          name="deliveryMethod"
+                          value="pickup"
+                          checked={formData.deliveryMethod === 'pickup'}
+                          onChange={handleInputChange}
+                          className="mt-1"
+                        />
+                        <div className="flex-1">
+                          <p className="font-paragraph font-semibold text-foreground">Pickup Station</p>
+                          <p className="font-paragraph text-sm text-secondary">Pick up your order at a nearby logistics station</p>
+                        </div>
+                      </label>
+
+                      {/* Delivery Instructions (Optional) */}
+                      <div className="pt-4">
+                        <label className="font-paragraph text-sm text-foreground mb-2 block">
+                          Delivery Instructions (Optional)
+                        </label>
+                        <textarea
+                          name="deliveryInstructions"
+                          value={formData.deliveryInstructions}
+                          onChange={handleInputChange}
+                          placeholder="e.g., Leave package at the gate, Call before delivery, etc."
+                          rows={3}
+                          className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary resize-none"
+                        />
+                        <p className="font-paragraph text-xs text-secondary mt-2">
+                          Add any special instructions for delivery
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Conditional: Door Delivery - Show Shipping Address */}
+                  {formData.deliveryMethod === 'door' && (
+                    <div className="bg-background border border-secondary/20 p-8">
+                      <h2 className="font-heading text-2xl text-foreground mb-6">
+                        Shipping Address
+                      </h2>
+
+                      <div className="space-y-6">
                         <div>
                           <label className="font-paragraph text-sm text-foreground mb-2 block">
-                            City *
+                            Street Address *
                           </label>
                           <input
                             type="text"
-                            name="city"
+                            name="shippingAddress"
                             required
-                            value={formData.city}
+                            value={formData.shippingAddress}
                             onChange={handleInputChange}
                             className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
                           />
                         </div>
 
-                        <div>
-                          <label className="font-paragraph text-sm text-foreground mb-2 block">
-                            State *
-                          </label>
-                          <select
-                            name="state"
-                            required
-                            value={formData.state}
-                            onChange={handleInputChange}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          <div>
+                            <label className="font-paragraph text-sm text-foreground mb-2 block">
+                              City *
+                            </label>
+                            <input
+                              type="text"
+                              name="city"
+                              required
+                              value={formData.city}
+                              onChange={handleInputChange}
+                              className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="font-paragraph text-sm text-foreground mb-2 block">
+                              State *
+                            </label>
+                            <select
+                              name="state"
+                              required
+                              value={formData.state}
+                              onChange={handleInputChange}
                             className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
                           >
                             <option value="">Select State</option>
@@ -735,135 +851,98 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                   </div>
+                  )}
 
-                  {/* Delivery Method Section */}
-                  <div className="bg-background border border-secondary/20 p-8">
-                    <h2 className="font-heading text-2xl text-foreground mb-6">
-                      Delivery Method
-                    </h2>
+                  {/* Conditional: Pickup Station - Show Logistics Selection */}
+                  {formData.deliveryMethod === 'pickup' && (
+                    <div className="bg-background border border-secondary/20 p-8">
+                      <h2 className="font-heading text-2xl text-foreground mb-6">
+                        Pickup Details
+                      </h2>
 
-                    <div className="space-y-6">
-                      {/* Delivery Method Radio Buttons */}
-                      <div>
-                        <label className="font-paragraph text-sm text-foreground mb-3 block font-semibold">
-                          How would you like to receive your order? *
-                        </label>
-                        <div className="space-y-3">
-                          <label className="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-accent-pink transition-colors">
-                            <input
-                              type="radio"
-                              name="deliveryMethod"
-                              value="door"
-                              checked={formData.deliveryMethod === 'door'}
-                              onChange={handleInputChange}
-                              className="w-5 h-5 text-accent-pink focus:ring-accent-pink"
-                            />
-                            <div className="ml-3">
-                              <span className="font-paragraph font-semibold text-foreground">Door Delivery</span>
-                              <p className="text-xs text-secondary mt-1">Get your order delivered directly to your address</p>
-                            </div>
+                      <div className="space-y-6">
+                        <div>
+                          <label className="font-paragraph text-sm text-foreground mb-2 block">
+                            Select State *
                           </label>
-
-                          <label className="flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-accent-pink transition-colors">
-                            <input
-                              type="radio"
-                              name="deliveryMethod"
-                              value="pickup"
-                              checked={formData.deliveryMethod === 'pickup'}
-                              onChange={handleInputChange}
-                              className="w-5 h-5 text-accent-pink focus:ring-accent-pink"
-                            />
-                            <div className="ml-3">
-                              <span className="font-paragraph font-semibold text-foreground">Pickup Station</span>
-                              <p className="text-xs text-secondary mt-1">Pick up your order at a nearby logistics station</p>
-                            </div>
-                          </label>
+                          <select
+                            name="state"
+                            required
+                            value={formData.state}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
+                          >
+                            <option value="">Select State</option>
+                            {NIGERIAN_STATES.map(state => (
+                              <option key={state} value={state}>{state}</option>
+                            ))}
+                          </select>
+                          <p className="mt-2 text-xs text-secondary">
+                            Select your state to see available pickup locations
+                          </p>
                         </div>
-                      </div>
 
-                      {/* Pickup Station Options - Only show if pickup is selected */}
-                      {formData.deliveryMethod === 'pickup' && (
-                        <>
+                        <div>
+                          <label className="font-paragraph text-sm text-foreground mb-2 block">
+                            Logistics Company *
+                          </label>
+                          <select
+                            name="logisticsCompany"
+                            required
+                            value={formData.logisticsCompany}
+                            onChange={handleInputChange}
+                            className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
+                          >
+                            <option value="">Select Logistics Company</option>
+                            {LOGISTICS_COMPANIES.map(company => (
+                              <option key={company.value} value={company.value}>{company.name}</option>
+                            ))}
+                          </select>
+                          <p className="mt-2 text-xs text-secondary">
+                            Choose your preferred logistics company
+                          </p>
+                        </div>
+
+                        {availablePickupLocations.length > 0 && (
                           <div>
                             <label className="font-paragraph text-sm text-foreground mb-2 block">
-                              Logistics Company *
+                              Pickup Location *
                             </label>
                             <select
-                              name="logisticsCompany"
+                              name="pickupLocation"
                               required
-                              value={formData.logisticsCompany}
+                              value={formData.pickupLocation}
                               onChange={handleInputChange}
-                              className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary rounded-lg"
+                              className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
                             >
-                              <option value="">Select Logistics Company</option>
-                              {LOGISTICS_COMPANIES.map(company => (
-                                <option key={company.value} value={company.value}>{company.name}</option>
+                              <option value="">Select Pickup Location</option>
+                              {availablePickupLocations.map(location => (
+                                <option key={location} value={location}>{location}</option>
                               ))}
                             </select>
                             <p className="mt-2 text-xs text-secondary">
-                              Choose your preferred logistics company
+                              Select the nearest pickup location to you
                             </p>
                           </div>
+                        )}
 
-                          {availablePickupLocations.length > 0 && (
-                            <div>
-                              <label className="font-paragraph text-sm text-foreground mb-2 block">
-                                Pickup Location *
-                              </label>
-                              <select
-                                name="pickupLocation"
-                                required
-                                value={formData.pickupLocation}
-                                onChange={handleInputChange}
-                                className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary rounded-lg"
-                              >
-                                <option value="">Select Pickup Location</option>
-                                {availablePickupLocations.map(location => (
-                                  <option key={location} value={location}>{location}</option>
-                                ))}
-                              </select>
-                              <p className="mt-2 text-xs text-secondary">
-                                Select the nearest pickup location to you
-                              </p>
+                        {/* Shipping Cost Display */}
+                        {shippingCost > 0 && (
+                          <div className="bg-accent-lavender/10 p-4 rounded-lg border border-accent-pink/20">
+                            <div className="flex justify-between items-center">
+                              <span className="font-paragraph text-sm font-semibold text-foreground">
+                                Pickup Cost:
+                              </span>
+                              <span className="font-heading text-xl text-accent-pink font-bold">{formatPrice(shippingCost)}</span>
                             </div>
-                          )}
-                        </>
-                      )}
-
-                      {/* Delivery Instructions */}
-                      <div>
-                        <label className="font-paragraph text-sm text-foreground mb-2 block">
-                          Delivery Instructions (Optional)
-                        </label>
-                        <textarea
-                          name="deliveryInstructions"
-                          value={formData.deliveryInstructions}
-                          onChange={(e) => handleInputChange(e as any)}
-                          rows={3}
-                          className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary rounded-lg resize-none"
-                          placeholder="e.g., Leave package at the gate, Call before delivery, etc."
-                        />
-                        <p className="mt-2 text-xs text-secondary">
-                          Add any special instructions for delivery
-                        </p>
-                      </div>
-
-                      {/* Shipping Cost Display */}
-                      {shippingCost > 0 && (
-                        <div className="bg-accent-lavender/10 p-4 rounded-lg border border-accent-pink/20">
-                          <div className="flex justify-between items-center">
-                            <span className="font-paragraph text-sm font-semibold text-foreground">
-                              {formData.deliveryMethod === 'door' ? 'Delivery' : 'Pickup'} Cost:
-                            </span>
-                            <span className="font-heading text-xl text-accent-pink font-bold">{formatPrice(shippingCost)}</span>
+                            <p className="mt-2 text-xs text-secondary">
+                              Ready for pickup: 3-5 business days
+                            </p>
                           </div>
-                          <p className="mt-2 text-xs text-secondary">
-                            Estimated delivery: 3-5 business days
-                          </p>
-                        </div>
-                      )}
+                        )}
+                      </div>
                     </div>
-                  </div>
+                  )}
 
                   <div className="mt-8 space-y-4">
                     <button

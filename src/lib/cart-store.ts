@@ -30,23 +30,31 @@ export const useCartStore = create<CartState>()(
       isOpen: false,
 
       addItem: (item) => {
-        set((state) => {
-          const existingItem = state.items.find((i) => i.id === item.id);
-          
-          if (existingItem) {
-            return {
-              items: state.items.map((i) =>
-                i.id === item.id
-                  ? { ...i, quantity: i.quantity + (item.quantity || 1) }
-                  : i
-              ),
-            };
-          }
+        console.log('🛒 Adding item to cart:', item);
+        try {
+          set((state) => {
+            const existingItem = state.items.find((i) => i.id === item.id);
+            
+            if (existingItem) {
+              console.log('  ↪️ Item exists, updating quantity');
+              return {
+                items: state.items.map((i) =>
+                  i.id === item.id
+                    ? { ...i, quantity: i.quantity + (item.quantity || 1) }
+                    : i
+                ),
+              };
+            }
 
-          return {
-            items: [...state.items, { ...item, quantity: item.quantity || 1 }],
-          };
-        });
+            console.log('  ➕ Adding new item to cart');
+            return {
+              items: [...state.items, { ...item, quantity: item.quantity || 1 }],
+            };
+          });
+          console.log('✅ Cart updated. Total items:', get().getItemCount());
+        } catch (error) {
+          console.error('❌ Error adding item to cart:', error);
+        }
       },
 
       removeItem: (id) => {
