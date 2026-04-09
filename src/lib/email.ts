@@ -24,7 +24,9 @@ interface OrderEmailData {
 }
 
 export async function sendOrderConfirmationEmail(data: OrderEmailData): Promise<boolean> {
-  const resendApiKey = process.env.RESEND_API_KEY;
+  const resendApiKey = import.meta.env.RESEND_API_KEY || process.env.RESEND_API_KEY;
+  
+  console.log('🔑 Checking RESEND_API_KEY:', resendApiKey ? 'Found' : 'Missing');
   
   if (!resendApiKey) {
     console.error('RESEND_API_KEY not configured');
@@ -41,7 +43,7 @@ export async function sendOrderConfirmationEmail(data: OrderEmailData): Promise<
     const { data: emailData, error } = await resend.emails.send({
       from: 'GLOWVA SKIN <orders@glowvaskin.com>',
       to: [data.customerEmail],
-      subject: `Order Confirmation #${data.orderId.slice(0, 8)}`,
+      subject: `Order Confirmation #${String(data.orderId).slice(0, 8)}`,
       html: emailHtml,
     });
 
@@ -108,7 +110,7 @@ export async function sendAdminOrderNotification(data: OrderEmailData): Promise<
     const { data: emailData, error } = await resend.emails.send({
       from: 'GLOWVA SKIN Orders <orders@glowvaskin.com>',
       to: [adminEmail],
-      subject: `🛍️ New Order #${data.orderId.slice(0, 8)} - ₦${data.totalAmount.toLocaleString('en-NG')}`,
+      subject: `🛍️ New Order #${String(data.orderId).slice(0, 8)} - ₦${data.totalAmount.toLocaleString('en-NG')}`,
       html: emailHtml,
     });
 
@@ -185,7 +187,7 @@ function generateCustomerEmailTemplate(data: OrderEmailData): string {
                   <!-- Order Details -->
                   <div style="background-color: #f9f9f9; border-left: 4px solid #E91E63; padding: 20px; margin: 20px 0;">
                     <p style="margin: 0 0 10px 0; color: #333; font-size: 14px;">
-                      <strong>Order ID:</strong> #${data.orderId.slice(0, 8).toUpperCase()}
+                      <strong>Order ID:</strong> #${String(data.orderId).slice(0, 8).toUpperCase()}
                     </p>
                     <p style="margin: 0 0 10px 0; color: #333; font-size: 14px;">
                       <strong>Order Date:</strong> ${new Date(data.orderDate).toLocaleDateString('en-NG', { 
@@ -324,7 +326,7 @@ function generateAdminEmailTemplate(data: OrderEmailData): string {
                   <!-- Order Details -->
                   <div style="background-color: #E8F5E9; border-left: 4px solid #4CAF50; padding: 20px; margin: 20px 0;">
                     <p style="margin: 0 0 10px 0; color: #333; font-size: 14px;">
-                      <strong>Order ID:</strong> #${data.orderId.slice(0, 8).toUpperCase()}
+                      <strong>Order ID:</strong> #${String(data.orderId).slice(0, 8).toUpperCase()}
                     </p>
                     <p style="margin: 0 0 10px 0; color: #333; font-size: 14px;">
                       <strong>Order Date:</strong> ${new Date(data.orderDate).toLocaleDateString('en-NG', { 
