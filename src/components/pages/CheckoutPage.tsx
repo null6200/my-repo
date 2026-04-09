@@ -429,19 +429,21 @@ export default function CheckoutPage() {
   });
   const [shippingCost, setShippingCost] = useState(0);
   const [availablePickupLocations, setAvailablePickupLocations] = useState<string[]>([]);
+  const [paystackKey, setPaystackKey] = useState<string>('');
 
   useEffect(() => {
     if (items.length === 0) {
       navigate('/products');
     }
     
-    // Debug: Check if Paystack key is loaded
-    const paystackKey = import.meta.env.PUBLIC_PAYSTACK_PUBLIC_KEY;
-    console.log('🔑 Paystack Key Status:');
-    console.log('  - Key exists:', !!paystackKey);
-    console.log('  - Key starts with pk_test:', paystackKey?.startsWith('pk_test_'));
-    console.log('  - Key length:', paystackKey?.length);
-    console.log('  - First 15 chars:', paystackKey?.substring(0, 15));
+    // Fetch Paystack key from API
+    fetch('/api/config')
+      .then(res => res.json())
+      .then(data => {
+        setPaystackKey(data.paystackPublicKey);
+        console.log('🔑 Paystack Key loaded from API:', !!data.paystackPublicKey);
+      })
+      .catch(err => console.error('Failed to load Paystack key:', err));
   }, [items, navigate]);
 
   useEffect(() => {
@@ -535,8 +537,6 @@ export default function CheckoutPage() {
       const orderReference = generateOrderReference();
       const totalWithShipping = totalPrice + shippingCost;
       const amountInKobo = Math.round(totalWithShipping * 100);
-
-      const paystackKey = import.meta.env.PUBLIC_PAYSTACK_PUBLIC_KEY;
       
       if (!paystackKey || paystackKey === 'pk_test_xxxx') {
         alert('Payment system not configured. Please contact support.');
