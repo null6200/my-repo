@@ -36,6 +36,7 @@ services:
       DATABASE_URL: postgresql://${DB_USER:-skincare_user}:${DB_PASSWORD:-skincare_pass_2024}@postgres:5432/${DB_NAME:-skincare_ecommerce}
       PUBLIC_PAYSTACK_PUBLIC_KEY: ${PUBLIC_PAYSTACK_PUBLIC_KEY}
       RESEND_API_KEY: ${RESEND_API_KEY}
+      IMAGE_STORAGE: ${IMAGE_STORAGE:-local}
     depends_on:
       postgres:
         condition: service_healthy
