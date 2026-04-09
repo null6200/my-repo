@@ -35,33 +35,43 @@ export const POST: APIRoute = async ({ request }) => {
 
     // LOCAL STORAGE (for development)
     if (imageStorage === 'local') {
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      
-      // Generate unique filename
-      const timestamp = Date.now();
-      const filename = `${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
-      
-      // Create uploads directory if it doesn't exist
-      const uploadsDir = join(process.cwd(), 'public', 'uploads');
-      if (!existsSync(uploadsDir)) {
-        await mkdir(uploadsDir, { recursive: true });
-      }
-      
-      // Save file
-      const filepath = join(uploadsDir, filename);
-      await writeFile(filepath, buffer);
-      
-      // Return public URL
-      const publicUrl = `/uploads/${filename}`;
-      
-      return new Response(
-        JSON.stringify({ url: publicUrl }),
-        {
-          status: 200,
-          headers: { 'Content-Type': 'application/json' },
+      try {
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
+        
+        // Generate unique filename
+        const timestamp = Date.now();
+        const filename = `${timestamp}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '_')}`;
+        
+        // Use absolute path for production
+        const uploadsDir = '/app/public/uploads';
+        
+        // Create uploads directory if it doesn't exist
+        if (!existsSync(uploadsDir)) {
+          console.log('Creating uploads directory:', uploadsDir);
+          await mkdir(uploadsDir, { recursive: true });
         }
-      );
+        
+        // Save file
+        const filepath = join(uploadsDir, filename);
+        console.log('Saving file to:', filepath);
+        await writeFile(filepath, buffer);
+        console.log('File saved successfully');
+        
+        // Return public URL
+        const publicUrl = `/uploads/${filename}`;
+        
+        return new Response(
+          JSON.stringify({ url: publicUrl }),
+          {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+          }
+        );
+      } catch (localError) {
+        console.error('Local storage error:', localError);
+        throw new Error(`Local storage failed: ${localError instanceof Error ? localError.message : 'Unknown error'}`);
+      }
     }
 
     // CLOUDINARY STORAGE (for production)
