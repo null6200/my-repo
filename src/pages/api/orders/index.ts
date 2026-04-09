@@ -11,7 +11,7 @@ export const GET: APIRoute = async () => {
     // Transform database rows to match admin panel format
     const orders = result.rows.map(row => ({
       id: row.id,
-      orderNumber: row.id.slice(0, 13).toUpperCase(),
+      orderNumber: row.order_number,
       customerName: row.customer_name,
       customerEmail: row.customer_email,
       customerPhone: row.customer_phone,
@@ -23,7 +23,7 @@ export const GET: APIRoute = async () => {
       state: row.state,
       city: row.city,
       shippingAddress: row.shipping_address,
-      status: row.order_status,
+      status: row.status,
       paymentStatus: row.payment_status,
       paystackReference: row.paystack_reference,
       createdAt: row.created_at,
