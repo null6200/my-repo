@@ -71,14 +71,17 @@ export const POST: APIRoute = async ({ request }) => {
       order_items,
     } = body;
 
+    // Generate order number
+    const order_number = `ORD-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+
     const result = await query(
       `INSERT INTO orders (
         customer_name, customer_email, customer_phone,
         shipping_address, city, state, country, postal_code,
         total_amount, shipping_cost, logistics_company, pickup_location,
-        order_status, payment_status,
-        paystack_reference, order_items
-      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
+        status, payment_status,
+        paystack_reference, order_items, order_number
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
       RETURNING *`,
       [
         customer_name,
@@ -97,6 +100,7 @@ export const POST: APIRoute = async ({ request }) => {
         payment_status || 'Pending',
         paystack_reference,
         JSON.stringify(order_items),
+        order_number,
       ]
     );
 
