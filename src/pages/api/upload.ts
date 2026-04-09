@@ -5,6 +5,19 @@ import { existsSync } from 'fs';
 
 export const prerender = false;
 
+const corsHeaders = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'POST, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export const OPTIONS: APIRoute = async () => {
+  return new Response(null, {
+    status: 200,
+    headers: corsHeaders,
+  });
+};
+
 export const POST: APIRoute = async ({ request }) => {
   try {
     const formData = await request.formData();
@@ -13,7 +26,10 @@ export const POST: APIRoute = async ({ request }) => {
     if (!file) {
       return new Response(JSON.stringify({ error: 'No file provided' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          ...corsHeaders,
+        },
       });
     }
 
@@ -21,7 +37,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (!file.type.startsWith('image/')) {
       return new Response(JSON.stringify({ error: 'File must be an image' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
@@ -29,7 +45,7 @@ export const POST: APIRoute = async ({ request }) => {
     if (file.size > 5 * 1024 * 1024) {
       return new Response(JSON.stringify({ error: 'File size must be less than 5MB' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       });
     }
 
@@ -67,7 +83,7 @@ export const POST: APIRoute = async ({ request }) => {
           JSON.stringify({ url: publicUrl }),
           {
             status: 200,
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json', ...corsHeaders },
           }
         );
       } catch (localError) {
@@ -117,7 +133,7 @@ export const POST: APIRoute = async ({ request }) => {
       }),
       {
         status: 200,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       }
     );
   } catch (error) {
@@ -129,7 +145,7 @@ export const POST: APIRoute = async ({ request }) => {
       }),
       {
         status: 500,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...corsHeaders },
       }
     );
   }
