@@ -50,14 +50,8 @@ const NIGERIAN_STATES = [
   'Yobe', 'Zamfara'
 ];
 
-const LOGISTICS_COMPANIES = [
-  { name: 'GUO Transport', value: 'GUO' },
-  { name: 'GIG Logistics', value: 'GIG' },
-  { name: 'ABC Transport', value: 'ABC' },
-  { name: 'PARK Logistics', value: 'PARK' }
-];
-
-const PICKUP_LOCATIONS: { [key: string]: { [state: string]: string[] } } = {
+// Will be loaded from API
+const OLD_PICKUP_LOCATIONS: { [key: string]: { [state: string]: string[] } } = {
   'GUO': {
     'Abia': [
       'ABA - 23, Milverton Avenue',
@@ -430,6 +424,8 @@ export default function CheckoutPage() {
   const [shippingCost, setShippingCost] = useState(0);
   const [availablePickupLocations, setAvailablePickupLocations] = useState<string[]>([]);
   const [paystackKey, setPaystackKey] = useState<string>('');
+  const [logisticsCompanies, setLogisticsCompanies] = useState<Array<{id: number, name: string, code: string, base_price: number}>>([]);
+  const [allPickupLocations, setAllPickupLocations] = useState<Array<{id: number, company_id: number, company_code: string, state: string, location_name: string, address: string}>>([]);
 
   useEffect(() => {
     if (items.length === 0) {
@@ -444,6 +440,24 @@ export default function CheckoutPage() {
         console.log('🔑 Paystack Key loaded from API:', !!data.paystackPublicKey);
       })
       .catch(err => console.error('Failed to load Paystack key:', err));
+
+    // Fetch logistics companies
+    fetch('/api/logistics/companies')
+      .then(res => res.json())
+      .then(data => {
+        setLogisticsCompanies(data.companies || []);
+        console.log('📦 Loaded logistics companies:', data.companies?.length);
+      })
+      .catch(err => console.error('Failed to load logistics companies:', err));
+
+    // Fetch all pickup locations
+    fetch('/api/logistics/locations')
+      .then(res => res.json())
+      .then(data => {
+        setAllPickupLocations(data.locations || []);
+        console.log('📍 Loaded pickup locations:', data.locations?.length);
+      })
+      .catch(err => console.error('Failed to load pickup locations:', err));
   }, [items, navigate]);
 
   useEffect(() => {
@@ -494,28 +508,22 @@ export default function CheckoutPage() {
 
     // Update pickup locations when logistics company changes (for pickup station)
     if (name === 'logisticsCompany' && formData.deliveryMethod === 'pickup') {
-      const company = value;
+      const companyCode = value;
       
-      if (company) {
-        // Get all locations for the selected company across all states
-        const companyLocations = PICKUP_LOCATIONS[company] || {};
-        const allLocations: string[] = [];
+      if (companyCode) {
+        // Get all locations for the selected company from API data
+        const companyLocs = allPickupLocations.filter(loc => loc.company_code === companyCode);
+        const locationStrings = companyLocs.map(loc => `${loc.location_name} - ${loc.address}`);
         
-        // Flatten all locations from all states
-        Object.keys(companyLocations).forEach(state => {
-          const stateLocations = companyLocations[state] || [];
-          allLocations.push(...stateLocations);
-        });
-        
-        setAvailablePickupLocations(allLocations);
+        setAvailablePickupLocations(locationStrings);
         setFormData(prev => ({ ...prev, pickupLocation: '' }));
-      }
-    }
 
-    // Calculate shipping cost for pickup station (placeholder - admin will set real prices later)
-    if (name === 'logisticsCompany' && formData.deliveryMethod === 'pickup') {
-      const baseCost = value === 'GUO' ? 2500 : value === 'GIG' ? 2000 : value === 'ABC' ? 1800 : 2200;
-      setShippingCost(baseCost);
+        // Set shipping cost from company's base_price
+        const company = logisticsCompanies.find(c => c.code === companyCode);
+        if (company) {
+          setShippingCost(company.base_price);
+        }
+      }
     }
   };
 
@@ -894,8 +902,10 @@ export default function CheckoutPage() {
                             className="w-full px-4 py-3 bg-background border border-secondary/30 text-foreground font-paragraph focus:outline-none focus:border-primary"
                           >
                             <option value="">Select Logistics Company</option>
-                            {LOGISTICS_COMPANIES.map(company => (
-                              <option key={company.value} value={company.value}>{company.name}</option>
+                            {logisticsCompanies.map(company => (
+                              <option key={company.code} value={company.code}>
+                                {company.name} - ₦{company.base_price.toLocaleString()}
+                              </option>
                             ))}
                           </select>
                           <p className="mt-2 text-xs text-secondary">
