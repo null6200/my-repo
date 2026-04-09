@@ -10,7 +10,6 @@ services:
       POSTGRES_DB: ${DB_NAME:-skincare_ecommerce}
     volumes:
       - postgres_data:/var/lib/postgresql/data
-      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - glowvaskin-network
     healthcheck:
@@ -35,7 +34,9 @@ services:
       NODE_ENV: production
       DATABASE_URL: postgresql://${DB_USER:-skincare_user}:${DB_PASSWORD:-skincare_pass_2024}@postgres:5432/${DB_NAME:-skincare_ecommerce}
       PUBLIC_PAYSTACK_PUBLIC_KEY: ${PUBLIC_PAYSTACK_PUBLIC_KEY}
+      PUBLIC_SITE_URL: ${PUBLIC_SITE_URL}
       RESEND_API_KEY: ${RESEND_API_KEY}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
       IMAGE_STORAGE: ${IMAGE_STORAGE:-local}
     depends_on:
       postgres:
