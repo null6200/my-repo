@@ -7,7 +7,7 @@ interface LogisticsCompany {
   id: number;
   name: string;
   code: string;
-  base_price: number;
+  base_fee: number;
   is_active: boolean;
 }
 
@@ -49,7 +49,7 @@ export default function AdminLogisticsPage() {
   });
 
   const [priceFormData, setPriceFormData] = useState({
-    base_price: 0
+    base_fee: 0
   });
 
   useEffect(() => {
@@ -126,7 +126,7 @@ export default function AdminLogisticsPage() {
           id: editingCompany.id,
           name: editingCompany.name,
           code: editingCompany.code,
-          base_price: priceFormData.base_price,
+          base_fee: priceFormData.base_fee,
           is_active: editingCompany.is_active
         })
       });
@@ -158,7 +158,7 @@ export default function AdminLogisticsPage() {
 
   const handleEditPrice = (company: LogisticsCompany) => {
     setEditingCompany(company);
-    setPriceFormData({ base_price: company.base_price });
+    setPriceFormData({ base_fee: company.base_fee });
     setShowPriceModal(true);
   };
 
@@ -264,7 +264,7 @@ export default function AdminLogisticsPage() {
                   <div className="mt-3 pt-3 border-t border-accent-pink/20">
                     <p className="text-xs text-secondary mb-1">Base Price:</p>
                     <p className="font-heading text-2xl text-accent-pink font-bold">
-                      {formatPrice(company.base_price)}
+                      {formatPrice(company.base_fee)}
                     </p>
                   </div>
                 </div>
@@ -349,7 +349,7 @@ export default function AdminLogisticsPage() {
                         </td>
                         <td className="px-6 py-4">
                           <span className="font-paragraph text-sm font-bold text-accent-pink">
-                            {formatPrice(companies.find(c => c.id === location.company_id)?.base_price || 0)}
+                            {formatPrice(companies.find(c => c.id === location.company_id)?.base_fee || 0)}
                           </span>
                         </td>
                         <td className="px-6 py-4">
@@ -398,8 +398,8 @@ export default function AdminLogisticsPage() {
                   required
                   min="0"
                   step="100"
-                  value={priceFormData.base_price}
-                  onChange={(e) => setPriceFormData({ base_price: parseFloat(e.target.value) || 0 })}
+                  value={priceFormData.base_fee}
+                  onChange={(e) => setPriceFormData({ base_fee: parseFloat(e.target.value) || 0 })}
                   className="w-full px-4 py-3 bg-white border-2 border-gray-300 text-foreground font-paragraph focus:outline-none focus:border-accent-pink rounded-lg text-xl font-bold"
                 />
                 <p className="mt-2 text-sm text-secondary">

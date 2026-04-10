@@ -424,7 +424,7 @@ export default function CheckoutPage() {
   const [shippingCost, setShippingCost] = useState(0);
   const [availablePickupLocations, setAvailablePickupLocations] = useState<string[]>([]);
   const [paystackKey, setPaystackKey] = useState<string>('');
-  const [logisticsCompanies, setLogisticsCompanies] = useState<Array<{id: number, name: string, code: string, base_price: number}>>([]);
+  const [logisticsCompanies, setLogisticsCompanies] = useState<Array<{id: number, name: string, code: string, base_fee: number}>>([]);
   const [allPickupLocations, setAllPickupLocations] = useState<Array<{id: number, company_id: number, company_code: string, state: string, location_name: string, address: string}>>([]);
 
   useEffect(() => {
@@ -518,10 +518,10 @@ export default function CheckoutPage() {
         setAvailablePickupLocations(locationStrings);
         setFormData(prev => ({ ...prev, pickupLocation: '' }));
 
-        // Set shipping cost from company's base_price
+        // Set shipping cost from company's base_fee
         const company = logisticsCompanies.find(c => c.code === companyCode);
         if (company) {
-          setShippingCost(company.base_price);
+          setShippingCost(company.base_fee);
         }
       }
     }
@@ -588,8 +588,8 @@ export default function CheckoutPage() {
             postal_code: formData.postalCode,
             total_amount: totalPrice,
             shipping_cost: shippingCost,
-            logistics_company: formData.logisticsCompany,
-            pickup_location: formData.pickupLocation,
+            logistics_company: formData.logisticsCompany || 'Door Delivery',
+            pickup_location: formData.pickupLocation || 'N/A',
             order_status: 'Processing',
             payment_status: 'Paid',
             paystack_reference: response.reference,
@@ -904,7 +904,7 @@ export default function CheckoutPage() {
                             <option value="">Select Logistics Company</option>
                             {logisticsCompanies.map(company => (
                               <option key={company.code} value={company.code}>
-                                {company.name} - ₦{company.base_price.toLocaleString()}
+                                {company.name} - ₦{company.base_fee.toLocaleString()}
                               </option>
                             ))}
                           </select>
