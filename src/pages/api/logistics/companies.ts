@@ -27,13 +27,13 @@ export const GET: APIRoute = async () => {
 export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { name, code, base_price, is_active } = body;
+    const { name, code, base_fee, is_active } = body;
 
     const result = await query(
-      `INSERT INTO logistics_companies (name, code, base_price, is_active)
+      `INSERT INTO logistics_companies (name, code, base_fee, is_active)
        VALUES ($1, $2, $3, $4)
        RETURNING *`,
-      [name, code, base_price || 0, is_active !== false]
+      [name, code, base_fee || 0, is_active !== false]
     );
 
     return new Response(JSON.stringify(result.rows[0]), {
@@ -53,14 +53,14 @@ export const POST: APIRoute = async ({ request }) => {
 export const PUT: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
-    const { id, name, code, base_price, is_active } = body;
+    const { id, name, code, base_fee, is_active } = body;
 
     const result = await query(
       `UPDATE logistics_companies 
-       SET name = $1, code = $2, base_price = $3, is_active = $4, updated_at = CURRENT_TIMESTAMP
+       SET name = $1, code = $2, base_fee = $3, is_active = $4, updated_at = CURRENT_TIMESTAMP
        WHERE id = $5
        RETURNING *`,
-      [name, code, base_price, is_active, id]
+      [name, code, base_fee, is_active, id]
     );
 
     if (result.rows.length === 0) {
