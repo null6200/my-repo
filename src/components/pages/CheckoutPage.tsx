@@ -521,7 +521,7 @@ export default function CheckoutPage() {
         // Set shipping cost from company's base_fee
         const company = logisticsCompanies.find(c => c.code === companyCode);
         if (company) {
-          setShippingCost(company.base_fee);
+          setShippingCost(Number(company.base_fee));
         }
       }
     }
